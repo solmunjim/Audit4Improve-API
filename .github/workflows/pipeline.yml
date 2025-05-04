@@ -1,0 +1,40 @@
+name: Pruebas separadas en construcción y test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonando el repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurando Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '16'
+
+      - name: Construyendo el código
+        run: |
+          chmod +x gradlew
+          ./gradlew build -x test
+  
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Clonando el repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurando Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '16'
+
+      - name: Ejecutando los tests
+        run: |
+          chmod +x gradlew
+          ./gradlew test
