@@ -1,4 +1,5 @@
 name: Flujo solmunjim
+
 on:
   workflow_dispatch:
   issues:
@@ -10,12 +11,14 @@ jobs:
   flujo-facil:
     runs-on: ubuntu-latest
     steps:
-    - name: Evento recibido
+      - name: Evento recibido
+        run: echo "Evento recibido ${{ github.event_name }}"
 
-      run: echo &quot;Evento recibido ${{ github.event_name }}&quot;
-    - name: Acción externa - hora actual
-      uses: josStorer/get-current-time@v2.0.0
-      with:
-        format: &#39;YYYY-MM-DD HH:mm:ss&#39;
-    - name: Mostrar hora
-      run: echo &quot; Hora actual ${{ steps.accion-externa.outputs.time }}&quot;
+      - name: Acción externa - hora actual
+        id: obtener_hora
+        uses: josStorer/get-current-time@v2.0.0
+        with:
+          format: 'YYYY-MM-DD HH:mm:ss'
+
+      - name: Mostrar hora
+        run: echo "Hora actual ${{ steps.obtener_hora.outputs.time }}"
