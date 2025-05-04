@@ -1,5 +1,4 @@
-name: Pruebas separadas en construcción y test
-
+name: Pruebas pipeline.yml
 on:
   workflow_dispatch:
 
