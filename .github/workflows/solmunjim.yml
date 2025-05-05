@@ -1,0 +1,31 @@
+name: solmunjim
+
+on:
+  workflow_dispatch:
+  issues:
+    types: [opened]
+  project_card:
+    types: [moved]
+
+jobs:
+  mostrar-evento-y-fecha:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Mostrar tipo de evento
+        run: echo "Evento detectado ${{ github.event_name }} en el repositorio ${{ github.repository }}"
+
+      - name: Obtener fecha actual (solo día)
+        id: fecha_actual
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fecha = new Date();
+            const dia = fecha.toLocaleDateString('en-GB'); // formato DD/MM/YYYY
+            core.setOutput("fecha", dia);
+
+      - name: Mostrar fecha obtenida
+        run: echo "Fecha actual ${{ steps.fecha_actual.outputs.fecha }}"
+
+
+
